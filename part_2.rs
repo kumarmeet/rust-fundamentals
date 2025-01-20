@@ -198,7 +198,25 @@ fn main() {
 
     hashmap.extend(zipped);
 
-    println!("{:?}", hashmap);
+    println!("-----------{:?}", hashmap);
+
+    let ans = hashmap.get("penny");
+
+    match ans {
+        Some(&age) => println!("age penny -> : {}", age),
+        None => println!("no age"),
+    }
+
+    let mut i = 0;
+
+    let k = ["1", "2", "3", "4", "5", "6"];
+
+    while i <= 5 {
+        hashmap.entry(k[i]).or_insert(i);
+        i += 1;
+    }
+
+    println!("*********{:?}", hashmap);
 
     hashmap.clear();
 
@@ -240,6 +258,36 @@ fn main() {
 
     println!("Result: {}", result); // Prints "Result: 16"
     println!("y: {}", y); // Prints "y: 11"
+
+    let user = Vec::from([("Alice", 30), ("Bob", 25)]);
+
+    let data = exercise_map(&user);
+
+    println!("data:---------------- {:?}", data);
+
+    let answer = iterator_exercise(vec![1, 2, 3, 4, 5, 6]);
+
+    println!("answer: {:?}", answer);
+}
+
+fn iterator_exercise(v: Vec<i32>) -> Vec<i32> {
+    let v_iter = v.iter();
+
+    let mut odd_values = v_iter
+        .filter(|x| *x % 2 == 1)
+        .map(|x| x * x).collect();
+
+    odd_values
+}
+
+fn exercise_map<'a>(v: &'a Vec<(&'a str, i32)>) -> HashMap<&'a str, i32> {
+    let mut hashmap: HashMap<&str, i32> = HashMap::new();
+
+    for &(key, val) in v {
+        hashmap.entry(key).or_insert(val);
+    }
+
+    return hashmap;
 }
 
 //Closure Capturing by Mutable Reference (FnMut)
